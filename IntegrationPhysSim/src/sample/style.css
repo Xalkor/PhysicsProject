@@ -1,0 +1,11 @@
+#anchorPane {
+    -fx-background-color: #EEEEEE;
+}
+
+#canvas{
+    -fx-background-color: #3090CC
+}
+
+#ground{
+    -fx-background-color: #10BB40
+}

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+
+<AnchorPane fx:id="anchorPane" maxHeight="1080.0" maxWidth="1920.0" minHeight="600.0" minWidth="1350.0" prefHeight="600.0" prefWidth="1350.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+   <FlowPane alignment="TOP_CENTER" columnHalignment="CENTER" layoutX="14.0" layoutY="25.0" prefHeight="580.0" prefWidth="126.0" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="1186.0" AnchorPane.topAnchor="25.0">
+      <children>
+         <Label prefHeight="17.0" prefWidth="150.0" text="Time Step:">
+            <padding>
+               <Insets top="15.0" />
+            </padding>
+         </Label>
+         <Slider fx:id="dtSlider" blockIncrement="0.5" layoutX="15.0" layoutY="127.0" majorTickUnit="0.3" max="1.0" min="0.1" minorTickCount="2" showTickLabels="true" showTickMarks="true" value="0.1">
+            <padding>
+               <Insets bottom="15.0" top="15.0" />
+            </padding>
+         </Slider>
+         <CheckBox fx:id="dragCheckBox" mnemonicParsing="false" prefHeight="17.0" prefWidth="140.0" text="Drag: Off" textAlignment="CENTER" />
+         <Label prefHeight="32.0" prefWidth="150.0" text="Drag Constant:">
+            <padding>
+               <Insets top="15.0" />
+            </padding>
+         </Label>
+         <Slider fx:id="dragSlider" blockIncrement="0.5" layoutX="15.0" layoutY="42.0" majorTickUnit="0.3" max="1.0" min="0.1" minorTickCount="2" showTickLabels="true" showTickMarks="true" value="0.1">
+            <padding>
+               <Insets bottom="15.0" top="15.0" />
+            </padding>
+         </Slider>
+      </children>
+   </FlowPane>
+      <AnchorPane fx:id="canvas" layoutX="175.0" layoutY="25.0" maxHeight="550.0" maxWidth="1000.0" minHeight="500.0" minWidth="1000.0" prefHeight="550.0" prefWidth="1000.0" BorderPane.alignment="CENTER_LEFT">
+      <children>
+         <AnchorPane fx:id="ground" layoutY="500.0" maxHeight="50.0" maxWidth="750.0" minHeight="25.0" minWidth="750.0" prefHeight="50.0" prefWidth="750.0" style="-fx-background-color: GREEN;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="500.0" />
+         <AnchorPane fx:id="sky" layoutY="-1.0" maxHeight="500.0" maxWidth="750.0" minHeight="500.0" minWidth="750.0" prefHeight="500.0" prefWidth="750.0" style="-fx-background-color: LIGHTBLUE;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      </children>
+      <opaqueInsets>
+         <Insets top="5.0" />
+      </opaqueInsets></AnchorPane>
+   <FlowPane alignment="TOP_CENTER" columnHalignment="CENTER" layoutX="1190.0" layoutY="25.0" prefHeight="580.0" prefWidth="126.0">
+      <children>
+         <Label prefHeight="17.0" prefWidth="150.0" text="Launch Angle:" textAlignment="CENTER">
+            <FlowPane.margin>
+               <Insets top="15.0" />
+            </FlowPane.margin>
+         </Label>
+         <Slider fx:id="angleSlider" blockIncrement="15.0" majorTickUnit="45.0" max="90.0" min="-90.0" minorTickCount="1" showTickLabels="true" showTickMarks="true">
+            <padding>
+               <Insets top="15.0" />
+            </padding>
+         </Slider>
+         <Label layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="150.0" text="Speed:" textAlignment="CENTER">
+            <padding>
+               <Insets top="15.0" />
+            </padding>
+         </Label>
+         <Slider fx:id="speedSlider" layoutX="10.0" layoutY="27.0" majorTickUnit="20.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" value="75.0">
+            <padding>
+               <Insets top="15.0" />
+            </padding>
+         </Slider>
+         <Label layoutX="10.0" layoutY="65.0" prefHeight="17.0" prefWidth="150.0" text="Integrator:" textAlignment="CENTER">
+            <padding>
+               <Insets top="15.0" />
+            </padding>
+         </Label>
+         <ChoiceBox fx:id="integratorChoiceBox" prefWidth="150.0">
+            <FlowPane.margin>
+               <Insets top="15.0" />
+            </FlowPane.margin>
+         </ChoiceBox>
+         <Button fx:id="launchButton" mnemonicParsing="false" text="Launch!" textFill="RED">
+            <FlowPane.margin>
+               <Insets top="15.0" />
+            </FlowPane.margin>
+         </Button>
+      </children>
+   </FlowPane>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</AnchorPane>
