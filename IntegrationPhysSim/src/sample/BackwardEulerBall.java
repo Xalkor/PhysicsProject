@@ -32,7 +32,7 @@ public class BackwardEulerBall extends PhysicsObject{
             l.setStroke(rgb(200,169, 69));
             getWorld().getChildren().add(l);
             path.add(l);
-            System.out.println(l);
+            //System.out.println(l);
         }else{
             setVel(new Vector(0,0));
         }

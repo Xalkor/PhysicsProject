@@ -1,5 +1,6 @@
 package sample;
 
+import com.sun.prism.paint.Gradient;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -14,8 +15,9 @@ import javafx.scene.shape.Circle;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 
-import static java.lang.Math.random;
-import static java.lang.Math.toRadians;
+import java.util.function.Function;
+
+import static java.lang.Math.*;
 import static javafx.scene.paint.Color.*;
 
 public class Controller {
@@ -47,7 +49,7 @@ public class Controller {
             dragCheckBox.setText("Drag: O" + (dragCheckBox.isSelected() ? "n": "ff"));
         });
 
-        path = new Circle[10];
+        path = new Circle[50];
         for (int i = 0; i < path.length; i++) {
             path[i] = new Circle(4, WHITE);
             path[i].setLayoutX(random() * sky.getWidth());
@@ -72,6 +74,9 @@ public class Controller {
                         break;
                     case "Improved Euler":
                         ball = new ImprovedEulerBall(.5, 1, 10, 10, ballSprite, sky);
+                        break;
+                    case "Velocity Verlet":
+                        ball = new VerletBall(.5, 1, 10, 10, ballSprite, sky);
                         break;
                         default:
                             System.exit(-69);
@@ -102,8 +107,8 @@ public class Controller {
         arrow = tmp;
         arrowView = new ImageView(arrow);
         sky.getChildren().add(arrowView);
-        arrowView.setFitWidth(50);
-        arrowView.setFitHeight(40);
+        arrowView.setFitWidth(40);
+        arrowView.setFitHeight(20);
 
         ballSprite = new Image("soccer.png");
         ball = new EulerBall(.5, 1, 10, 10, ballSprite, sky);
@@ -148,18 +153,46 @@ public class Controller {
     }
 
     private void plotKinematic() {
-        final double g = (GRAVITY.getY() / ball.getM());
-        Vector v = velFromSlider();
-        double t = -2 * v.getY() / g;
-        System.out.println(t);
-        for (int n = 0; n < path.length; n++) {
-            double i = n / (double) (path.length - 1) * t;
-            double x = v.getX() * i + ball.getPos().getX();
-            double y = v.getY() * i + g / 2 * i * i + ball.getPos().getY();
-            path[n].setLayoutX(x * sky.getWidth());
-            path[n].setLayoutY(sky.getHeight() - ((1 - y) * sky.getWidth()));
-            System.out.println(x + " " + y);
+        if (!dragCheckBox.isSelected()) {
+            final double g = (GRAVITY.getY() / ball.getM());
+            final Vector v = velFromSlider();
+            double t = -2 * v.getY() / g;
+            System.out.println(t + " " + v.getY() * t + g / 2 * t * t + ball.getPos().getY());
+            for (int n = 0; n < path.length; n++) {
+                double i = n / (double) (path.length - 1) * t;
+                double x = v.getX() * i + ball.getPos().getX();
+                double y = v.getY() * i + g / 2 * i * i + ball.getPos().getY();
+                path[n].setLayoutX(x * sky.getWidth());
+                path[n].setLayoutY(sky.getHeight() - ((1 - y) * sky.getWidth()));
+                //System.out.println(x + " " + y);
 //            gc.fillOval(x-4, y-4, 8, 8);
+            }
+        }else{
+            final double g = (GRAVITY.getY() / ball.getM());
+            final double C = (dragSlider.getValue() / ball.getM());
+            final Vector v = velFromSlider();
+            double t = 1;
+            System.out.println("t: " + t + " y(t): " + y(-g, v.getY(), C, t));
+            while(y(-g, v.getY(), C, t+=.01) < 1){
+                //System.out.println("t: " + t + " y(t): " + y(-g, v.getY(), C, t));
+            }
+            //System.out.println("t: " + t + " y(t): " + y(-g, v.getY(), C, t));
+            for (int n = 0; n < path.length; n++) {
+                double i = n / (double) (path.length - 1) * t;
+                double x = x(v.getX(), C, i);
+                double y = y(-g, v.getY(), C, i);
+                path[n].setLayoutX(x * sky.getWidth());
+                path[n].setLayoutY(sky.getHeight() - ((1 - y) * sky.getWidth()));
+                //System.out.println(x + " " + y);
+//            gc.fillOval(x-4, y-4, 8, 8);
+            }
         }
+    }
+
+    public double x(double v0, double c, double t){
+        return (v0/c) * (1-exp(-c*t)) + ball.getPos().getX();
+    }
+    public double y(double g, double v0, double c, double t){
+        return (((v0 + g/c)*(1-exp(-c*t))) - g*t)/c + ball.getPos().getY();
     }
 }

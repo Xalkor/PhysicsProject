@@ -8,10 +8,10 @@ import java.util.ArrayList;
 
 import static javafx.scene.paint.Color.rgb;
 
-public class ImprovedEulerBall extends PhysicsObject{
+public class VerletBall extends PhysicsObject{
     private ArrayList<Line> path;
 
-    public ImprovedEulerBall(double x, double y, double m, double r, Image sprite, Pane world) {
+    public VerletBall(double x, double y, double m, double r, Image sprite, Pane world) {
         super(x, y, m, r, sprite, world);
         path = new ArrayList<>();
     }
@@ -31,7 +31,7 @@ public class ImprovedEulerBall extends PhysicsObject{
             Line l = new Line(pPos.getX(), pPos.getY(), tPos.getX(), tPos.getY());
             l.setStrokeWidth(2);
             l.setStrokeDashOffset(4);
-            l.setStroke(rgb(164, 71, 200));
+            l.setStroke(rgb(34, 138, 12));
             getWorld().getChildren().add(l);
             path.add(l);
             //System.out.println(l);
